@@ -1,0 +1,131 @@
+{% extends "layout.html" %}
+
+{% block head %}
+<script type="text/javascript" src="{{url_for('static', filename='scripts/datetime-picker/bootstrap-datetimepicker.min.js')}}"></script>
+<link rel="stylesheet" href="{{ url_for('static', filename='stylesheets/datetime-picker/bootstrap-datetimepicker.min.css' )}}"/>
+{% endblock %}
+
+{% block content %}
+<div class="content-section"> 
+    <form method ="POST" action="" enctype="multipart/form-data">
+        {{ form.hidden_tag() }} 
+            <fieldset class="form-grop">
+                <legend class = "border-bottom mb-4">{{ legend }}</legend>
+                    <div class="form-group">
+                     {{ form.title.label(class="form-control-label") }}
+                        {% if form.title.errors %}
+                        {{ form.title(class="form-control form-control-lg is-invalid") }}
+                            <div class="invalid-feedback">
+                            {% for error in form.title.errors %}
+                                <span> {{ error }} </span>
+                            {% endfor %}
+                            </div>
+                        {% else %}
+                            {{ form.title(class="form-control form-control-lg") }}
+                        {% endif %}
+                    </div><br>
+
+                    <div class="form-group">
+                        {{ form.caption.label(class="form-control-label") }}
+                        {% if form.caption.errors %}
+                            {{ form.caption(class="form-control form-control-lg is-invalid") }}
+                            <div class="invalid-feedback">
+                                {% for error in form.caption.errors %}
+                                    <span> {{ error }} </span>
+                                {% endfor %}
+                            </div>
+                        {% else %}
+                            {{ form.caption(class="form-control form-control-lg") }}
+                        {% endif %}
+                    </div><br>
+                
+                    <div class="form-group">
+                        {{ form.start_date.label(class="form-control-label") }}
+                        {% if form.start_date.errors %}
+                            {{ form.start_date(class="form-control form-control-lg is-invalid") }}
+                        <div class="invalid-feedback">
+                            {% for error in form.start_date.errors %}
+                                <span> {{ error }} </span>
+                            {% endfor %}
+                        </div>
+                        {% else %}
+                            {{ form.start_date(class="form-control form-control-lg", id="datetimepicker1") }}
+                        {% endif %}
+                    </div><br>
+           
+                    <div class="form-group">
+                        {{ form.end_date.label(class="form-control-label") }}
+                        {% if form.end_date.errors %}
+                            {{ form.end_date(class="form-control form-control-lg is-invalid") }}
+                            <div class="invalid-feedback">
+                                {% for error in form.end_date.errors %}
+                                    <span> {{ error }} </span>
+                                {% endfor %}
+                            </div>
+                        {% else %}
+                            {{ form.end_date(class="form-control form-control-lg", id="datetimepicker2") }}
+                        {% endif %}
+                    </div><br>
+
+                    <div class="form-grop">
+                            {{ form.picture.label()}}
+                            {{ form.picture(class="form-control-file") }}
+                            {% if form.picture.errors %}
+                                {% for error in form.picture.errors %}
+                                    <span class="text-danger"> {{ error }}</span><br>
+                                {% endfor %}
+                            {% endif %}
+                    </div><br>
+
+                    <div class="form-group">
+                            {{ form.venue.label()}}
+                            {{ form.venue(class="form-control form-control-lg") }}
+                            {% if form.venue.errors %}
+                                {% for error in form.venue.errors %}
+                                    <span class="text-danger"> {{ error }}</span></div></br>
+                                {% endfor %}
+                            {% endif %}
+                    </div>
+
+                    <div class="form-group">
+                            {{ form.categories.label()}}
+                            {{ form.categories(multiple=True, class="form-control form-control-lg")}}
+                            {% if form.categories.errors %}
+                            {% for error in form.categories.errors %}
+                                <span class="text-danger"> {{ error }}</span></div></br>
+                            {% endfor %}
+                        {% endif %}
+                    </div>
+            </fieldset>
+
+            <div class="form-grop">
+                {{ form.submit(class="btn btn-outline-info")}}
+            </div>
+        </form>
+    </div>
+{% endblock content %}
+
+{% block scripts %}
+<script type="text/javascript">
+    $(function () {
+        $('#datetimepicker1').datetimepicker({
+            format: 'yyyy-mm-dd HH:ii:00',
+            pick12HourFormat: false 
+        });
+        $('.prev i').removeClass();
+        $('.prev i').addClass("fa fa-chevron-left");
+
+        $('.next i').removeClass();
+        $('.next i').addClass("fa fa-chevron-right");
+    });
+</script>
+
+<script type="text/javascript">
+    $(function () {
+        $('#datetimepicker2').datetimepicker({
+            format: 'yyyy-mm-dd HH:ii:00',
+            pick12HourFormat: false 
+        });
+    });
+</script>
+{% endblock scripts %}

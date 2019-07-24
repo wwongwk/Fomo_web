@@ -1,0 +1,52 @@
+{% extends "layout.html" %}
+{% block head %}
+    <meta charset='utf-8' />
+    <link href="{{ url_for('static', filename='fullcalendar/packages/core/main.css')}}" rel='stylesheet' />
+	<link href="{{ url_for('static', filename='fullcalendar/packages/daygrid/main.css')}}" rel='stylesheet' />
+	<link href="{{ url_for('static', filename='fullcalendar/packages/list/main.css')}}" rel='stylesheet' />
+
+    <script src="{{ url_for('static', filename='fullcalendar/packages/core/main.js')}}"></script>
+	<script src="{{ url_for('static', filename='fullcalendar/packages/daygrid/main.js')}}"></script>
+	<script src="{{ url_for('static', filename='fullcalendar/packages/list/main.js')}}"></script>
+    <script type="module" src="{{ url_for('static', filename='fullcalendar/packages/interaction/main.js')}}">
+    
+    </script>
+{% endblock head %}
+
+{% block content %}
+<script>
+import interactionPlugin, {Draggable} from '@static/fullcalendar/interaction';
+		//initialize calendar aspects
+		document.addEventListener('DOMContentLoaded', function() {
+		  let draggableEl = document.getElementById('mydraggable');
+		  var calendarEl = document.getElementById('calendar');
+	
+		  var calendar = new FullCalendar.Calendar(calendarEl, {
+			plugins: [ 'dayGrid' ],
+            editable:true,
+			droppable: true
+	
+				//now-indicator (only works for Timeline or timegrid view)
+			  /* nowIndicator: ture */
+		  });
+		  calendar.render();
+		  new Draggable(containerEl, {
+  itemSelector: '.item-class',
+  eventData: function(eventEl) {
+    return {
+      title: eventEl.innerText,
+      duration: '02:00'
+    };
+  }
+});
+		});
+	</script>
+<br>
+  <body>
+    <div id='calendar'></div>
+    <div id='draggable-el' data-event='{ title: "my event", duration: "02:00" }'>drag me</div>
+  </body>
+{% endblock content %}
+
+{% block scripts %}
+{% endblock scripts %}

@@ -1,0 +1,141 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        {% if title %}
+        <title>Fomo - {{ title }}</title>
+        {% else %}
+        <title>Fomo</title>
+        {% endif %}
+        <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">  
+        
+        <script type="text/javascript" src="{{ url_for('static', filename='scripts/jquery/jquery.js')}}"></script>
+        <script type="text/javascript" src="{{ url_for('static', filename='scripts/moment/moment_.js')}}"></script>
+        <link rel="stylesheet" href="{{ url_for('static', filename='stylesheets/bootstrap/bootstrap.min.css')}}" />
+        <link rel="stylesheet" href="{{ url_for('static', filename='stylesheets/local/footer_sidenav_style.css')}}"> 
+        <link rel="stylesheet" href="{{ url_for('static', filename='stylesheets/local/icon_style.css')}}"> 
+        <script type="text/javascript" src="{{ url_for('static', filename='scripts/bootstrap/bootstrap.min.js')}}"></script>  
+        
+        {% block head %}
+        {% endblock head %}
+        
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no"> 
+    </head>
+    <body>
+        <nav class="navbar navbar-expand-lg navbar-light bg-light w3-padding-16">
+            <a class="navbar-brand" href=" {{ url_for('main.home')}} ">FOMO</a>
+            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+              <span class="navbar-toggler-icon"></span>
+            </button>
+          
+            <div class="collapse navbar-collapse" id="navbarSupportedContent">
+              <ul class="navbar-nav mr-auto">
+                <li class="nav-item">
+                  <a class="nav-link" href="{{ url_for('main.home')}}">Home <span class="sr-only">(current)</span></a>
+                </li>
+                <li class="nav-item">
+                    {% if current_user.is_authenticated %}
+                    <a class="nav-link" href="{{ url_for('users.logout')}}">Logout</a>
+                    {% else %}
+                    <a class="nav-link" href="{{ url_for('users.login')}}">Login</a>
+                    {% endif %}
+                </li>
+                {% if current_user.is_authenticated %}
+                <li class="nav-item dropdown">
+                  <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                    {{ current_user.username }}
+                  </a>
+                  <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+                    <a class="dropdown-item" href="{{ url_for('posts.create_post') }}">Create an Event</a>
+                    <a class="dropdown-item" href="{{ url_for('posts.view_my_event') }}">View My Events</a>
+                    <a class="dropdown-item" href="{{ url_for('main.about') }}">Following</a>
+                    <a class="dropdown-item" href="{{ url_for('users.update_account') }}">Account</a>
+                    <div class="dropdown-divider"></div>
+                    <a class="dropdown-item" href="{{ url_for('main.about')}}">About</a>
+                  </div>
+                </li>
+                {% endif %}
+              </ul>
+              <form class="form-inline my-2 my-lg-0">
+                <input class="form-control mr-sm-2" type="search" placeholder="Search" aria-label="Search">
+                <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button>
+              </form>
+            </div>
+        </nav>
+        {% block homeImage %}
+        {% endblock homeImage %}
+        <div class ="container">
+        {% with messages = get_flashed_messages(with_categories=true) %}
+            {% if messages %}
+                {% for category,message in messages %}
+                    <div class="alert alert-{{ category }}">
+                        {{ message }}
+                    </div>
+                {% endfor %}
+            {% endif %}
+        {% endwith %}
+        </div>
+        <div class ="container">
+        {% block content %}{% endblock %}
+        </div>
+        <!-- Footer -->
+        <div class="w3-padding-48"></div>
+        <footer class="w3-row-padding w3-padding-32 footer-background-color">
+<!--       <div class="w3-third">
+        <h3></h3>
+        <p>Praesent tincidunt sed tellus ut rutrum. Sed vitae justo condimentum, porta lectus vitae, ultricies congue gravida diam non fringilla.</p>
+        <p>Powered by <a href="https://www.w3schools.com/w3css/default.asp" target="_blank">w3.css</a></p>
+      </div> -->
+    
+<!--       <div class="w3-third">
+        <h3></h3>
+        <ul class="w3-ul w3-hoverable">
+          <li class="w3-padding-16">
+            <img src="/w3images/workshop.jpg" class="w3-left w3-margin-right" style="width:50px">
+            <span class="w3-large">Lorem</span><br>
+            <span>Sed mattis nunc</span>
+          </li>
+          <li class="w3-padding-16">
+            <img src="/w3images/gondol.jpg" class="w3-left w3-margin-right" style="width:50px">
+            <span class="w3-large">Ipsum</span><br>
+            <span>Praes tinci sed</span>
+          </li> 
+        </ul>
+      </div> -->
+  
+      <div class="local-padding-left-32">
+      <div class="container w3-third w3-serif">
+        <a href="https://www.instagram.com/eusoff_hall/">
+            <img class="local-icon-size-small" src="{{ url_for('static', filename='images/web_images/instagram_icon.png')}}">
+            <span class="local-padding-left-8"></span>
+        </a>
+        <a href="https://twitter.com/eusoffsmc?lang=en">
+          <img class="local-icon-size-small" src="{{ url_for('static', filename='images/web_images/twitter_icon.png')}}">
+          <span class="local-padding-left-8"></span>
+        </a>
+        <a href="https://eusoffhall.wordpress.com">
+          <img class="local-icon-size-small" src="{{ url_for('static', filename='images/web_images/wordpress_icon.png')}}">
+          <span class="local-padding-left-8"></span>
+        </a>
+        <a href="https://www.facebook.com/EusoffHall/">
+          <img class="local-icon-size-small" src="{{ url_for('static', filename='images/web_images/facebook_icon.png')}}">
+          <span class="local-padding-left-8"></span>
+        </a>
+      </div>
+    </div>
+    </footer>
+
+<!--         <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" 
+        integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
+
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" 
+        integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
+
+        <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" 
+        integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script> -->
+
+        {% block scripts %}
+        {% endblock scripts %}
+
+    </body>
+</html>

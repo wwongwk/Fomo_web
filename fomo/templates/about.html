@@ -1,0 +1,81 @@
+{% extends "layout.html" %}
+{% block head %}
+<link href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.7.1/css/bootstrap-datepicker3.css" rel="stylesheet" id="bootstrap-css">
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.0/js/bootstrap.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+<!-- <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datetimepicker/4.17.47/js/bootstrap-datetimepicker.min.js"></script> -->
+{% endblock head %}
+
+{% block content %}
+<div class="container">
+		<div class="row">
+			<h2>Bootstrap Datepicker</h2>
+		</div>
+		<div class="row">
+	        <div class='col-sm-6'>
+	        	<form>
+		            <div class="form-group">
+		                <div class='input-group date' id='datepicker'>
+		                    <input type='text' class="form-control" />
+		                    <span class="input-group-addon">
+		                        <span class="glyphicon glyphicon-calendar"></span>
+		                    </span>
+		                </div>
+		            </div>
+		        </form>
+	        </div>
+      </div>
+
+      <div class="row">
+          <h2>Bootstrap Datepicker</h2>
+        </div>
+        <div class="row">
+              <div class='col-sm-6'>
+                <form>
+                    <div class="form-group">
+                        <div class='input-group date' id='datepicker2'>
+                            <input type='text' class="form-control" />
+                            <span class="input-group-addon">
+                                <span class="glyphicon glyphicon-calendar"></span>
+                            </span>
+                        </div>
+                    </div>
+                </form>
+              </div>
+          </div>
+	</div>
+{% endblock content %}
+
+{% block scripts %}
+<script type="text/javascript" src="{{ url_for('static', filename='scripts/calendar.js' )}}"></script>
+<script >
+    $(function () {
+        $('#datepicker').datepicker({
+            format: "dd-mm-yyyy",
+            autoclose: true,
+            todayHighlight: true,
+          showOtherMonths: true,
+          selectOtherMonths: true,
+          autoclose: true,
+          changeMonth: true,
+          changeYear: true,
+          orientation: "button"
+        });
+    });
+
+    $(function () {
+        $('#datepicker2').datepicker({
+            format: "dd/mm/yyyy",
+            autoclose: true,
+            todayHighlight: true,
+          showOtherMonths: true,
+          selectOtherMonths: true,
+          autoclose: true,
+          changeMonth: true,
+          changeYear: true,
+          changeTime: true,
+          orientation: "button"
+        });
+    });
+</script>
+{% endblock scripts %}

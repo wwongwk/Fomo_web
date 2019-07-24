@@ -1,0 +1,12 @@
+{% extends "layout.html" %}
+{% block content %}
+    {% for post in posts %}
+    </br>
+    <div class="card mb-3">
+        <div class="card-body">
+        <h5 class="card-title"><a href="{{ url_for('posts.update_post_panel', post_id=post.id)}}">{{post.title}}</a></h5>
+              <p class="card-text">{{post.caption}}</p>
+            </div>
+        </div>
+    {% endfor %}
+{% endblock content %}

@@ -1,0 +1,26 @@
+{% extends "layout.html" %}
+{% block content %}
+<h1 class="mb-3" >Events By {{ user.username }}</h1>
+{% for post in posts.items %}
+</br>
+<div class="card mb-3">
+    <div class="card-body">
+    <h5 class="card-title"><a href="{{ url_for('posts.post', post_id=post.id)}}">{{post.title}}</a></h5>
+          <p class="card-text">{{post.content}}</p>
+          <p class="card-text"><small class="text-muted">Posted on {{ post.date.strftime('%Y-%m-%d') }} by {{post.author.username}}</small></p>
+        </div>
+    </div>
+{% endfor %}
+
+    {% for page_num in posts.iter_pages(left_edge=1, right_edge=1, left_current=1, right_current=3) %}
+        {% if page_num %}
+            {% if posts.page == page_num %}
+            <a class="btn btn-info mb-4" href="{{ url_for('users.user_posts', username=user.username, page=page_num) }}">{{ page_num }}</a>
+            {% else %}
+            <a class="btn btn-outline-info mb-4" href="{{ url_for('posts.users', username=user.username, 2page=page_num) }}">{{ page_num }}</a>
+            {% endif %}
+        {% else %}
+            ...
+        {% endif %}
+    {% endfor %}
+{% endblock %}

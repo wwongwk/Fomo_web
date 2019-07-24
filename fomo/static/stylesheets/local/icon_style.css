@@ -1,0 +1,17 @@
+.local-icon-size-small {
+    height: 30px;
+    width: 30px;
+}
+
+.local-padding-left-32{
+    padding-left: 32px;
+}
+
+.local-centralised{
+        margin-right: auto;/*centres in compliant browsers*/
+        margin-left: auto;/* "	" */
+}
+
+.local-padding-left-8{
+    padding-left: 8px;
+}

@@ -1,0 +1,88 @@
+{% extends "layout.html" %}
+
+{% block head %}
+<script src="{{ url_for('static', filename='scripts/local/carousel.js' )}}"></script>
+<link rel="stylesheet" href="{{ url_for('static', filename='stylesheets/local/carousel_style.css') }}">
+
+<script src="//maxcdn.bootstrapcdn.com/bootstrap/4.1.1/js/bootstrap.min.js"></script>
+{% endblock head %}
+
+{% block homeImage %}
+<img class="home_cover" src="{{ url_for('static', filename='images/web_images/home_cover.png' ) }}">
+{% endblock homeImage %}
+
+{% block content %}
+<br>
+<legend>Latest Events</legend>
+<div class="container">
+	<div class="row">
+    <div class="MultiCarousel" data-items="1,2,3,3" data-slide="1" id="MultiCarousel"  data-interval="1000">
+            <div class="MultiCarousel-inner">
+                {% for post in posts %}
+                {% set image_file = url_for('static', filename='images/post_images/' + post.image_file )%}
+                <div class="item">
+                    <div class="card" style="width: 20rem; height: 18rem;">
+                        <a href="{{ url_for('posts.view_post', post_id=post.id)}}">
+                            <img class="local-picture-size" src="{{image_file}}">
+                        </a><br>
+                        <div class="card-title">
+                          <h8 class="card-title"><a href="{{ url_for('posts.view_post', post_id=post.id)}}">{{post.title}}</a></h8>
+                        </div>
+                      </div>
+                </div>
+                {% endfor %}
+            </div>
+            <button class="btn btn-primary leftLst"><</button>
+            <button class="btn btn-primary rightLst">></button>
+        </div>
+  </div><hr/>
+  
+</div>
+
+<legend class=>Explore</legend>
+<div class="card-deck">
+    {% for category in category_row_one %}
+    {% set image_file = url_for('static', filename='images/category_covers/' + category.image_file )%}
+    <div class="card">
+          <a href="{{ url_for('categories.view_cateogry', category_id=category.id) }}" class="">
+            <img class="card-img-top", src="{{image_file}}">
+          </a>
+    </div>
+    {% endfor %}
+  </div>
+  <br>
+
+  <div class="card-deck">
+    {% for category in category_row_two %}
+    {% set image_file = url_for('static', filename='images/category_covers/' + category.image_file )%}
+    <div  class="card">
+          <a href="{{ url_for('categories.view_cateogry', category_id=category.id) }}" class="">
+            <img class="h-30 card-img-top", src="{{image_file}}">
+          </a>
+    </div>
+    {% endfor %}
+  </div>
+
+
+{% endblock content %}
+
+{% block scripts %}
+<script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" 
+integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" 
+integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
+
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" 
+integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
+
+<script>
+function w3_open() {
+  document.getElementById("mySidebar").style.display = "block";
+}
+ 
+function w3_close() {
+  document.getElementById("mySidebar").style.display = "none";
+}
+</script>
+{% endblock scripts %}

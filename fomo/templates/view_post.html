@@ -1,0 +1,28 @@
+{% extends "layout_side.html" %}
+{% block content %}
+    <h1>{{ post.title }}</h1>
+    <small class="text-muted">By {{ post.author.username }}</small>
+    <legend>Date</legend>
+    {{ post.start_date.strftime('%Y-%m-%d %H:%M') }} to {{ post.start_date.strftime('%Y-%m-%d %H:%M') }}
+    <br>
+    <br>
+    <legend>Venue</legend>
+    {{ post.venue.venue_name }}
+    <br>
+    <br>
+    <legend>More Details</legend>
+    {{ post.caption }}
+    <br>
+    <br>
+    <legend>Explore More Events Under</legend>
+    {% for category in post.category %}
+        <a href="{{url_for('categories.view_cateogry', category_id=category.id)}}">{{category.title}}</a><br>
+    {% endfor %}
+    <div class="sidenav">
+            <a href="{{ url_for('users.view_user', user_id=post.author.id)}}">Hosted By {{ post.author.username }}</a>
+        <a href="#">Join</a>
+        <a href="#">Share</a>
+        <a href="#"></a>
+    </div>
+    
+{% endblock %}
