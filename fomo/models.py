@@ -65,7 +65,7 @@ class Post(db.Model):
     category = db.relationship("Category", secondary=PostCategoryRelationTable, back_populates='posts', lazy=True)
 
     def __repr__(self):
-        return f"Post('{self.title}','{self.date}')"
+        return f"Post('{self.title}')"
 
 class Category(db.Model):
     __table_args__ = {'extend_existing': True}    

@@ -2,19 +2,122 @@
 
 {% block head %}
 <script src="{{ url_for('static', filename='scripts/local/carousel.js' )}}"></script>
-<link rel="stylesheet" href="{{ url_for('static', filename='stylesheets/local/carousel_style.css') }}">
+<link rel="stylesheet" href="{{ url_for('static', filename='stylesheets/local/home_style.css') }}">
 
 <script src="//maxcdn.bootstrapcdn.com/bootstrap/4.1.1/js/bootstrap.min.js"></script>
+
+<meta charset='utf-8' />
+<link href="{{ url_for('static', filename='fullcalendar/packages/core/main.css')}}" rel='stylesheet' />
+<link href="{{ url_for('static', filename='fullcalendar/packages/daygrid/main.css')}}" rel='stylesheet' />
+<link href="{{ url_for('static', filename='fullcalendar/packages/list/main.css')}}" rel='stylesheet' />
+<link href="{{ url_for('static', filename='stylesheets/main_calendar/calendar_style.css')}}" rel='stylesheet'>
+<link href="{{ url_for('static', filename='fullcalendar/packages/core/main-custom.css')}}" rel='stylesheet'>
+
+<script src="{{ url_for('static', filename='fullcalendar/packages/core/main.js')}}"></script>
+<script src="{{ url_for('static', filename='fullcalendar/packages/daygrid/main.js')}}"></script>
+<script src="{{ url_for('static', filename='fullcalendar/packages/list/main.js')}}"></script>
+<script src="{{ url_for('static', filename='fullcalendar/packages/interaction/interaction_main.js')}}"></script>
+
+<script>
+    //initialize calendar aspects
+    //pass event to JSON
+    var events_from_db = {{ events_from_db|safe }};
+
+    document.addEventListener('DOMContentLoaded', function() {
+      let draggableEl = document.getElementById('mydraggable');
+      var calendarEl = document.getElementById('calendar');
+  
+      var calendar = new FullCalendar.Calendar(calendarEl, {
+      plugins: [ 'dayGrid' ],
+      
+      themeSystem: 'bootstrap',
+      
+      //sizing specs
+      height: 550,
+      //contentHeight: 600,
+      aspectRatio: 1.3,
+      
+      //custom buttons
+      customButtons: {
+        homeButton: {
+          text: 'Home',
+          click: function() {
+          location.href = "{{ url_for('main.home') }}";
+          }
+        }
+      },
+        
+      // toolbars (headers, footers, sidebars)
+      header: { left:'title', center:'', right:'today prev,next' },
+      //weekNumbers:  true,
+      //weekLabel: "Week",
+      //footer: { left:'homeButton' },
+  
+  
+      // views
+      defaultView: 'dayGridMonth',
+  
+      views: {
+          dayGrid: {
+          // options apply to dayGridMonth, dayGridWeek, and dayGridDay views
+          },
+          timeGrid: {
+          // options apply to timeGridWeek and timeGridDay views
+          },
+          week: {
+          // options apply to dayGridWeek and timeGridWeek views
+          },
+          day: {
+          // options apply to dayGridDay and timeGridDay views
+          }
+        },
+        
+        //Navigation links and their functions
+        navLinks: true,
+        navLinkDayClick: function(date, jsEvent) {
+          alert('hi'); // for now it just says hi
+        },
+      
+        //events! All sample fields are included
+/* 					events:[
+          //example
+          {
+            title: 'Example',
+            start: '2019-07-23',
+            end: '2019-07-25',
+            url: 'www.google.com'
+            //url: (can use url_for to redirect to event page)
+  
+            //allDay: true //or false
+            //startTime: '00:00'
+            //endTime: '12:00:00'
+            //editable: true,
+            //color: black
+            // className: (takes in string field, determines which HTML class is applied to the event)
+          }
+        ], */
+        
+        events: events_from_db,
+
+        droppable: true
+  
+        //now-indicator (only works for Timeline or timegrid view)
+        /* nowIndicator: ture */
+      });
+      calendar.render();
+      new Draggable(draggableEl);
+    });
+
+  </script>
+
 {% endblock head %}
 
-{% block homeImage %}
-<img class="home_cover" src="{{ url_for('static', filename='images/web_images/home_cover.png' ) }}">
-{% endblock homeImage %}
+{% block background_begin %}
+<div class="home-bg">
+{% endblock background_begin %}
 
 {% block content %}
-<br>
-<legend>Latest Events</legend>
-<div class="container">
+<!-- <div class="container">
 	<div class="row">
     <div class="MultiCarousel" data-items="1,2,3,3" data-slide="1" id="MultiCarousel"  data-interval="1000">
             <div class="MultiCarousel-inner">
@@ -37,8 +140,16 @@
         </div>
   </div><hr/>
   
-</div>
+</div> -->
 
+<br>
+<div class="local-calendar-style">
+<body>
+		<div id='calendar'></div>
+    </body>
+  </div>
+<br>
+<br>
 <legend class=>Explore</legend>
 <div class="card-deck">
     {% for category in category_row_one %}
@@ -51,7 +162,6 @@
     {% endfor %}
   </div>
   <br>
-
   <div class="card-deck">
     {% for category in category_row_two %}
     {% set image_file = url_for('static', filename='images/category_covers/' + category.image_file )%}
@@ -62,9 +172,11 @@
     </div>
     {% endfor %}
   </div>
-
-
 {% endblock content %}
+
+{% block background_end %}
+</div>
+{% endblock background_end %}
 
 {% block scripts %}
 <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" 

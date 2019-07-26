@@ -16,11 +16,15 @@ def home():
     categories = Category.query.all()
     posts = Post.query.order_by(Post.start_date.desc()).limit(9)
 
+    raw_events_from_db = Post.query.all()
+    events_from_db = convert_events(raw_events_from_db)
+
     category_row_one = [ categories[0],categories[1],categories[2],categories[3],categories[4] ]
     category_row_two = [ categories[5],categories[6],categories[7],categories[8],categories[9] ]
 
     return render_template('home.html', posts = posts, categories=categories, 
-    category_row_one = category_row_one, category_row_two = category_row_two)
+    category_row_one = category_row_one, category_row_two = category_row_two,
+    events_from_db=json.dumps(events_from_db))
 
 @main.route("/about")
 def about():

@@ -51,6 +51,19 @@
     
         .MultiCarousel .leftLst.over, .MultiCarousel .rightLst.over { pointer-events: none; background:#ccc; }
 
-.home_cover {
+.home-bg {
+  background-image: url("/static/images/web_images/home_cover1.jpg");
   width:100%;
+  opacity: 1;
+}
+
+.home-bg::after{
+  opacity: 0.2;
+}
+.local-overallbg{
+  
+}
+
+.local-calendar-style{
+  
 }
