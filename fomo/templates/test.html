@@ -8,14 +8,15 @@
     <script src="{{ url_for('static', filename='fullcalendar/packages/core/main.js')}}"></script>
 	<script src="{{ url_for('static', filename='fullcalendar/packages/daygrid/main.js')}}"></script>
 	<script src="{{ url_for('static', filename='fullcalendar/packages/list/main.js')}}"></script>
-    <script type="module" src="{{ url_for('static', filename='fullcalendar/packages/interaction/main.js')}}">
-    
-    </script>
+	<script src="{{ url_for('static', filename='fullcalendar/packages/interaction/interaction_main.js')}}"></script>
+	<script type="module">
+		import { Calendar } from "{{ url_for('static', filename='fullcalendar/packages/core/main.js')}}";
+		import interactionPlugin, { Draggable } from "{{ url_for('static', filename='fullcalendar/packages/interaction/interaction_main.js')}}";
+	</script>
 {% endblock head %}
 
 {% block content %}
 <script>
-import interactionPlugin, {Draggable} from '@static/fullcalendar/interaction';
 		//initialize calendar aspects
 		document.addEventListener('DOMContentLoaded', function() {
 		  let draggableEl = document.getElementById('mydraggable');

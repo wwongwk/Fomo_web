@@ -1,8 +1,9 @@
+import json
 from flask import Blueprint, request, render_template, url_for,redirect
 from fomo.models import Post, Category, User 
 from fomo.main.forms import testForm
 from flask_wtf import Form
-from fomo.main.utils import save_picture
+from fomo.main.utils import convert_events
 from flask import Blueprint, render_template, url_for, redirect, request, flash
 from flask_login import login_user, current_user, logout_user, login_required
 from fomo import db, bcrypt
@@ -26,16 +27,8 @@ def about():
     return render_template('about.html')
 
 
-@main.route("/test", methods=['GET','POST'])
-@login_required
-def test():
-    form = testForm()
-    if form.validate_on_submit():
-        if form.picture.data:
-            picture_file = save_picture(form.picture.data)
-            
-        db.session.commit()
-        flash('Your account is updated', 'success')
-        return redirect(url_for('main.test'))  
-
-    return render_template('test.html', form=form)
+@main.route("/calendar", methods=['GET','POST'])
+def calendar():
+    raw_events_from_db = Post.query.all()
+    events_from_db = convert_events(raw_events_from_db)
+    return render_template('calendar.html', events_from_db=json.dumps(events_from_db) )
